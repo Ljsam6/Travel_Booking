@@ -37,10 +37,16 @@ context('Connectors', () => {
     // https://on.cypress.io/spread
     const arr = ['foo', 'bar', 'baz']
 
+
+    
     cy.wrap(arr).spread((foo, bar, baz) => {
+    
       expect(foo).to.eq('foo')
+    
       expect(bar).to.eq('bar')
+    
       expect(baz).to.eq('baz')
+    
     })
   })
 

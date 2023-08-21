@@ -67,7 +67,8 @@ context('Landing page of Ease my trip Website', () => {
         //Validating Traveller Section
         cy.get('#myFunction4').click()
         const travellerLabels = []
-        const expectedTravellerLabels=['Adults','Children','Infant']
+        const expectedTravellerLabels = ['Adults', 'Children', 'Infant']
+        let travellerNo=1 
         cy.get('#myDropdown_n p[class="trvlhead"]').each(($el, index, $list) => {
             
             let text = $el.text()
@@ -79,19 +80,70 @@ context('Landing page of Ease my trip Website', () => {
 
         //incrementing travellers
         cy.get('#field1').find('#optAdult').should('have.value', 1)
-        cy.get('#field1').find('#add').click()
+        cy.get('#field1').find('#add').click().then(() => {
+            travellerNo +=1
+        })
         cy.get('#field1').find('#optAdult').should('have.value', 2)
 
         cy.get('#field2').find('#optChild').should('have.value', 0)
-        cy.get('#field2').find('#add').click()
+        cy.get('#field2').find('#add').click().then(() => {
+            travellerNo +=1
+        })
         cy.get('#field2').find('#optChild').should('have.value', 1)
 
         cy.get('#field3').find('#optInfant').should('have.value', 0)
-        cy.get('#field3').find('#add').click()
+        cy.get('#field3').find('#add').click().then(() => {
+            travellerNo +=1
+        })
         cy.get('#field3').find('#optInfant').should('have.value', 1)
 
-        cy.get('#rbBusiness').check().should('be.checked')
+        cy.get('#rbEconomy').check().should('be.checked')
+        cy.get('#traveLer').click()
+
+        cy.get('#ptravlrNo').find('#spnDrpNo').then(($el) => {
+            let text = $el.text()
+            
+            expect(text).to.equal(`${travellerNo}`)
+            
+        })
+        cy.get('#ptravlrNo').find('#spnTraveller').then(($el) => {
+            let text = $el.text()
+            
+            expect(text).to.equal(`Traveller(s)`)
+            
+        })
+        cy.get('.srchBtnSe').click()
 
 
+
+        // should check if the ticket fair prices are in ascending order
+/** Below code doesnt work because , the prices are sorted based on the applicable discount which is why 
+ * some bigger prices may appear before smaller one...*/
+    
+    //  const numericPricesArray = [];
+    // cy.get('.fltResult div[id^="spnPrice"]:visible').each(($el) => {
+    //     const priceText = $el.text();
+    //     const numericPrice = parseFloat(priceText.replace(/,/g, ''));
+    //     numericPricesArray.push(numericPrice);
+    // }).then(() => {
+    //         for (let i = 1; i < numericPricesArray.length; i++) {
+    //             const currentPrice = numericPricesArray[i];
+    //             const previousPrice = numericPricesArray[i - 1];
+
+    //             // Check if the current price is less than or equal to the previous price
+    //             if (currentPrice < previousPrice) {
+    //             // Fail the test if the prices are not in ascending order
+    //             expect(false, `Prices are not in ascending order at index ${i} ${currentPrice} ${previousPrice}`).to.be.true;
+    //             }
+    //         }
+    //         // If the loop completes without failing, it means prices are in ascending order
+    //         expect(true).to.be.true;
+    //         });
+
+       
+    //     //Checking if the prices are in ascending order.
+        
     })
+
+
 })
