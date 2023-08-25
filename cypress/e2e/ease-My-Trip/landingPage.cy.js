@@ -1,19 +1,27 @@
+import HomePage from "../Page Object Model/HomePage";
+import SearchResult from "../Page Object Model/SearchResult";
+import CheckoutPage from "../Page Object Model/CheckoutPage";
+
 context('Landing page of Ease my trip Website', () => {
     
 
     it('To Verify the One Way Place selection functionality ', () => {
+
+        const homePage = new HomePage();
+        const searchResult = new SearchResult();
+        const checkoutPage = new CheckoutPage();
         //Visit URL
         cy.visit('https://www.easemytrip.com/')
        
         // Click for one way , should highlight the Background 
-        cy.get('#oway').click()
-        cy.get('#oway').should('have.css', 'background-color', 'rgb(255, 255, 255)')
+        homePage.getOneWayRadioButton().click()
+        homePage.getOneWayRadioButton().should('have.css', 'background-color', 'rgb(255, 255, 255)')
         
         // Validate From City Dropdown
-        cy.get('#FromSector_show',{force: true}).click()
-        cy.get('#fromautoFill_in .searcityCol').should('be.visible')
-        cy.get('#fromautoFill_in .searcityCol').type('Pune')
-        cy.get("#fromautoFill").each(($el,index,list) => {
+        homePage.getFromCityDropDownParentElement().click()
+        homePage.getFromCityDropDownTextBox().should('be.visible')
+        homePage.getFromCityDropDownTextBox().type('Pune')
+        homePage.getFromCityDropDown().each(($el,index,list) => {
             
             const city = $el.text()
             
@@ -22,13 +30,13 @@ context('Landing page of Ease my trip Website', () => {
             }
 
         })
-        cy.get('#FromSector_show').should('contain.value','Pune')
+        homePage.getFromCityDropDownParentElement().should('contain.value','Pune')
         
         //Validate To City form Dropdown
-        cy.get('#Editbox13_show', { force: true }).click()
-        cy.get('#toautoFill_in #a_Editbox13_show').should('be.visible')
-        cy.get('#toautoFill_in #a_Editbox13_show').type('Delhi')
-        cy.get("#toautoFill").each(($el,index,list) => {
+        homePage.getToCityDropDownParentElement().click()
+        homePage.getToCityDropDownTextBox().should('be.visible')
+        homePage.getToCityDropDownTextBox().type('Delhi')
+        homePage.getToCityDropDown().each(($el,index,list) => {
             
             const city = $el.text()
             
@@ -37,17 +45,17 @@ context('Landing page of Ease my trip Website', () => {
             }
 
         })
-        cy.get('#Editbox13_show').should('contain.value', 'Delhi')
+        homePage.getToCityDropDownParentElement().should('contain.value', 'Delhi')
         
         //Validate Departure Date Picker
 
         // current date =.days ul li .active-date
 
-        cy.get('#dvfarecal').find('.srlabel').should('contain.text', 'DEPARTURE DATE')
-        cy.get('#dvfarecal').click()
-        cy.get('.days ul li .active-date').click()
+        homePage.getDepartureDateElemennt().find('.srlabel').should('contain.text', 'DEPARTURE DATE')
+        homePage.getDepartureDateElemennt().click()
+        homePage.getDepartureDateCurrentElement().click()
         
-        cy.get('#dvfarecal p:nth-child(3)').then((el) => {
+        homePage.getDepartureDate().then((el) => {
             const date = el.text()
             const currentDate = new Date();
 
@@ -65,11 +73,11 @@ context('Landing page of Ease my trip Website', () => {
         })
 
         //Validating Traveller Section
-        cy.get('#myFunction4').click()
+        homePage.getTravellersDetailParentElement().click()
         const travellerLabels = []
         const expectedTravellerLabels = ['Adults', 'Children', 'Infant']
         let travellerNo=1 
-        cy.get('#myDropdown_n p[class="trvlhead"]').each(($el, index, $list) => {
+        homePage.getTravellersDropDownLabels().each(($el, index, $list) => {
             
             let text = $el.text()
             travellerLabels.push(text)
@@ -79,40 +87,40 @@ context('Landing page of Ease my trip Website', () => {
         })
 
         //incrementing travellers
-        cy.get('#field1').find('#optAdult').should('have.value', 1)
-        cy.get('#field1').find('#add').click().then(() => {
+        homePage.getAdultField().find('#optAdult').should('have.value', 1)
+        homePage.getAdultField().find('#add').click().then(() => {
             travellerNo +=1
         })
-        cy.get('#field1').find('#optAdult').should('have.value', 2)
+        homePage.getAdultField().find('#optAdult').should('have.value', 2)
 
-        cy.get('#field2').find('#optChild').should('have.value', 0)
-        cy.get('#field2').find('#add').click().then(() => {
+        homePage.getChildField().find('#optChild').should('have.value', 0)
+        homePage.getChildField().find('#add').click().then(() => {
             travellerNo +=1
         })
-        cy.get('#field2').find('#optChild').should('have.value', 1)
+        homePage.getChildField().find('#optChild').should('have.value', 1)
 
-        cy.get('#field3').find('#optInfant').should('have.value', 0)
-        cy.get('#field3').find('#add').click().then(() => {
+        homePage.getInfantField().find('#optInfant').should('have.value', 0)
+        homePage.getInfantField().find('#add').click().then(() => {
             travellerNo +=1
         })
-        cy.get('#field3').find('#optInfant').should('have.value', 1)
+        homePage.getInfantField().find('#optInfant').should('have.value', 1)
 
-        cy.get('#rbEconomy').check().should('be.checked')
-        cy.get('#traveLer').click()
+        homePage.getEconomyClassRadio().check().should('be.checked')
+        homePage.getTraveller_Done_Button().click()
 
-        cy.get('#ptravlrNo').find('#spnDrpNo').then(($el) => {
+        homePage.getTravellerNo_Displayed().find('#spnDrpNo').then(($el) => {
             let text = $el.text()
             
             expect(text).to.equal(`${travellerNo}`)
             
         })
-        cy.get('#ptravlrNo').find('#spnTraveller').then(($el) => {
+        homePage.getTravellerNo_Displayed().find('#spnTraveller').then(($el) => {
             let text = $el.text()
             
             expect(text).to.equal(`Traveller(s)`)
             
         })
-        cy.get('.srchBtnSe').click()
+        homePage.getSearchButton().click()
 
 
 
@@ -142,7 +150,13 @@ context('Landing page of Ease my trip Website', () => {
 
        
     //     //Checking if the prices are in ascending order.
+
+        searchResult.getFlight().eq(0).click()
         
+        //enter the mail at checkout page
+        checkoutPage.getEmailTextBox().type('abc@gmail.com')
+        
+
     })
 
 
