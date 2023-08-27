@@ -21,30 +21,19 @@ context('Landing page of Ease my trip Website', () => {
         homePage.getFromCityDropDownParentElement().click()
         homePage.getFromCityDropDownTextBox().should('be.visible')
         homePage.getFromCityDropDownTextBox().type('Pune')
-        homePage.getFromCityDropDown().each(($el,index,list) => {
-            
-            const city = $el.text()
-            
-            if (city.includes('Pune')) {
-                cy.wrap($el).click();
-            }
 
-        })
+        cy.fromCity('Pune')
+       
+
         homePage.getFromCityDropDownParentElement().should('contain.value','Pune')
         
         //Validate To City form Dropdown
         homePage.getToCityDropDownParentElement().click()
         homePage.getToCityDropDownTextBox().should('be.visible')
         homePage.getToCityDropDownTextBox().type('Delhi')
-        homePage.getToCityDropDown().each(($el,index,list) => {
-            
-            const city = $el.text()
-            
-            if (city.includes('Delhi')) {
-                cy.wrap($el).click();
-            }
 
-        })
+        cy.toCity('Delhi')
+        
         homePage.getToCityDropDownParentElement().should('contain.value', 'Delhi')
         
         //Validate Departure Date Picker

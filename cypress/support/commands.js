@@ -11,6 +11,39 @@
 //
 // -- This is a parent command --
 // Cypress.Commands.add('login', (email, password) => { ... })
+
+import HomePage from "../e2e/Page Object Model/HomePage";
+import SearchResult from "../e2e/Page Object Model/SearchResult";
+import CheckoutPage from "../e2e/Page Object Model/CheckoutPage";
+
+const homePage = new HomePage();
+const searchResult = new SearchResult();
+const checkoutPage = new CheckoutPage();
+
+Cypress.Commands.add('fromCity', (cityName) => {
+     homePage.getFromCityDropDown().each(($el,index,list) => {
+            
+            const city = $el.text()
+            
+            if (city.includes(cityName)) {
+                cy.wrap($el).click();
+            }
+
+     })
+})
+
+Cypress.Commands.add('toCity', (cityName) => {
+    
+    homePage.getToCityDropDown().each(($el, index, list) => {
+            
+            const city = $el.text()
+            
+            if (city.includes('Delhi')) {
+                cy.wrap($el).click();
+            }
+
+        })
+})
 //
 //
 // -- This is a child command --
