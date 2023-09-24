@@ -14,36 +14,30 @@
 
 import HomePage from "../e2e/Page Object Model/HomePage";
 import SearchResult from "../e2e/Page Object Model/SearchResult";
-import CheckoutPage from "../e2e/Page Object Model/CheckoutPage";
-
+import CustomerDetailsPage from "../e2e/Page Object Model/CustomerDetailsPage";
 const homePage = new HomePage();
 const searchResult = new SearchResult();
-const checkoutPage = new CheckoutPage();
+const customerDetailsPage = new CustomerDetailsPage();
 
-Cypress.Commands.add('fromCity', (cityName) => {
-     homePage.getFromCityDropDown().each(($el,index,list) => {
-            
-            const city = $el.text()
-            
-            if (city.includes(cityName)) {
-                cy.wrap($el).click();
-            }
+Cypress.Commands.add("fromCity", (cityName) => {
+  homePage.getFromCityDropDown().each(($el, index, list) => {
+    const city = $el.text();
 
-     })
-})
+    if (city.includes(cityName)) {
+      cy.wrap($el).click();
+    }
+  });
+});
 
-Cypress.Commands.add('toCity', (cityName) => {
-    
-    homePage.getToCityDropDown().each(($el, index, list) => {
-            
-            const city = $el.text()
-            
-            if (city.includes('Delhi')) {
-                cy.wrap($el).click();
-            }
+Cypress.Commands.add("toCity", (cityName) => {
+  homePage.getToCityDropDown().each(($el, index, list) => {
+    const city = $el.text();
 
-        })
-})
+    if (city.includes("Delhi")) {
+      cy.wrap($el).click();
+    }
+  });
+});
 //
 //
 // -- This is a child command --
@@ -57,4 +51,3 @@ Cypress.Commands.add('toCity', (cityName) => {
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 /// <reference types="Cypress" />
-

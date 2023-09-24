@@ -7,7 +7,7 @@ class HomePage
 
     // FROM CITY DATA ELEMENT
     getFromCityDropDownParentElement() {
-        return cy.get('#FromSector_show', { force: true });
+        return cy.get('#FromSector_show');
     }
     getFromCityDropDownTextBox() {
         return cy.get('#fromautoFill_in .searcityCol');
@@ -18,27 +18,27 @@ class HomePage
 
     //TO CITY DATA ELEMENT
     getToCityDropDownParentElement() {
-        return cy.get('#Editbox13_show', { force: true });
+        return cy.get('#Editbox13_show');
     }
     getToCityDropDownTextBox() {
-       return cy.get('#toautoFill_in #a_Editbox13_show');
+       return cy.get('#a_Editbox13_show');
     }
     getToCityDropDown() {
         return cy.get("#toautoFill");
     }
 
 // DEPARTURE DATE DATA ELEMENT
-    getDepartureDateElemennt() {
+    getDepartureDateElement() {
         return cy.get('#dvfarecal')
     }
     getDepartureDateLabel() {
         return cy.get('#dvfarecal').find('.srlabel');
     }
     getDepartureDateCurrentElement() {
-        return cy.get('.days ul li .active-date')
+        return cy.get('.days ul li .active-date',{force: true})
     }
     getDepartureDate() {
-        return cy.get('#dvfarecal p:nth-child(3)')
+        return cy.get('#dvfarecal p:nth-child(3)',{force: true})
     }
 
 //TRAVELLERS DATA BUTTON

@@ -9,6 +9,16 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "cypress": "^12.17.3"
+    "@badeball/cypress-cucumber-preprocessor": "^18.0.5",
+    "@cypress/browserify-preprocessor": "^3.0.2"
+  },
+  "cypress-cucumber-preprocessor": {
+    "html": {
+      "enabled": true
+    }
+  },
+  "devDependencies": {
+    "cypress": "^12.17.3",
+    "multiple-cucumber-html-reporter": "^3.5.0"
   }
 }
